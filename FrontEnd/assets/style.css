@@ -125,6 +125,31 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+.gallery-menu {
+	display: flex;
+	gap: 0.625rem;
+	margin: 3.188rem 0;
+	justify-content: center;
+}
+.gallery-menu input {
+	display: none;
+}
+.gallery-menu label {
+	font-family: 'Syne';
+	font-size: 1rem;
+	color: #1D6154;
+	font-weight: 700;
+	box-sizing: border-box;
+	border: #1D6154 1px solid;
+	border-radius: 60px;
+	padding: 0.563rem 1.25rem;
+	cursor: pointer;
+}
+.gallery-menu input:checked + label {
+	color: #FFFFFF;
+	background-color: #1D6154;
+
+}
 .gallery {
 	width: 100%;
 	display: grid;

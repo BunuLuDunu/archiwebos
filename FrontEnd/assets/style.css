@@ -52,6 +52,9 @@ table {
 }
 /** end reset css**/
 body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
@@ -212,6 +215,10 @@ input[type="submit"]{
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+footer {
+	margin-top: auto;
 }
 
 footer nav ul {

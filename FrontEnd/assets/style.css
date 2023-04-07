@@ -135,8 +135,23 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
+
+.title {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 5.75rem;
+}
+
+.modify {
+	margin-left: 2rem;
+}
+
+.modify a {
+	padding-left: 0.688rem;
+}
+
 .gallery-menu {
 	display: flex;
 	gap: 0.625rem;

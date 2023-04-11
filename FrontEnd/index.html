@@ -43,6 +43,16 @@
 		<div class="title">
 			<h2>Mes Projets</h2>
 		</div>
+		<dialog id="modal" class="modal" role="dialog">
+			<div class="modal-wrapper">
+				<button class="close-modal-btn" aria-label="Close" type="button"><i class="fa-solid fa-xmark"></i></button>
+				<h3 id="gallery-modal">Galerie Photo</h3>
+				<div class="gallery-modal"></div>
+				<label for="file-upload" class="file-upload-label">Ajouter une photo</label>
+				<input type="file" id="file-upload" name="file-upload" accept="image/png, image/jpeg">
+				<input type="button" class="delete-gallery" value="Supprimer la galerie">
+			</div>
+		</dialog>
 		<div class="gallery">
 		</div>
 	</section>

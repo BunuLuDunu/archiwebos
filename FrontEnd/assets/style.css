@@ -27,6 +27,12 @@ a:link, a:visited {
 	text-decoration: none;
 	color: inherit;
 }
+
+button, input   {
+	background-color: inherit;
+	border: none;
+	padding: 0;
+}
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -137,6 +143,7 @@ li:hover {
 	text-align: center;
 }
 
+/* Ajout d'une div autour du titre pour le bouton modifier */
 .title {
 	display: flex;
 	justify-content: center;
@@ -144,14 +151,25 @@ li:hover {
 	margin-bottom: 5.75rem;
 }
 
+/* Bouton modifier */
 .modify {
 	margin-left: 2rem;
 }
 
-.modify a {
-	padding-left: 0.688rem;
+#open-modal-btn {
+	cursor: pointer;
+	font-family: 'Work Sans';
+	background-color: inherit;
+	border: none;
+	padding: 0;
 }
 
+#open-modal-btn i {
+	font-size: 0.929rem;
+	padding-right: 0.688rem;
+}
+
+/* Boutons filtre des projets de la gallerie*/
 .gallery-menu {
 	display: flex;
 	gap: 0.625rem;
@@ -177,6 +195,65 @@ li:hover {
 	background-color: #1D6154;
 
 }
+/* Modale d'ajout de nouveaux projets */
+#modal {
+	border: none;
+	border-radius: 0.625rem;
+}
+
+#modal ::backdrop {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-wrapper {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	width: 39.375rem;
+	background: #FFFFFF;
+	padding: 1.625rem 1.875rem;
+}
+
+.modal-wrapper button {
+	margin-left: auto;
+	cursor: pointer;
+	font-size: 1.5rem;
+}
+
+.modal-wrapper h3 {
+	text-align: center;
+	font-size: 1.625rem;
+	margin-top: 0.625rem;
+	margin-bottom: 2.875rem;
+}
+
+.gallery-modal {
+	width: 26.25rem;
+	border-bottom: 1px solid #B3B3B3;
+}
+
+.modal-wrapper input[type="file"] {
+	display: none;
+}
+
+.modal-wrapper .file-upload-label {
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #FFFFFF;
+	text-align: center;
+	width: 14.813rem;
+	background: #1D6154;
+	border-radius: 3.75rem;
+	padding: 0.625rem 3.063rem;
+	margin-top: 2.375rem;
+}
+
+.modal-wrapper .delete-gallery {
+	color: #D65353;
+	font-family: 'Syne';
+	margin-top: 1.438rem;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;

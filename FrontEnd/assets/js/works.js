@@ -1,5 +1,4 @@
 import { adminAuth } from "./auth.js";
-import { openModal } from "./modal.js";
 
 //Récupération des travaux depuis l'API
 const response = await fetch('http://localhost:5678/api/works');
@@ -86,17 +85,10 @@ if(!adminAuth()) {
     const modify = document.createElement("div");
     modify.classList.add("modify");
     title.appendChild(modify)
-    //Création de l'icon modifier
-    const modifyIcon = document.createElement("i");
-    modifyIcon.classList.add("fa-sharp", "fa-regular", "fa-pen-to-square");
-    modify.appendChild(modifyIcon)
-    //Ajout du lien modifier
-    const a = document.createElement("a");
-    a.setAttribute("href", "#");
-    const modifyLink = document.createTextNode("Modifier");
-    a.appendChild(modifyLink)
-    modify.appendChild(a);
-    //Ecouteur d'évènement pour ouvrir la modale
-    openModal(e)
-    a.addEventListener("click", openModal)
+    //Ajout du bouton modifier
+    const modifyButton = document.createElement("button");
+    modifyButton.setAttribute("type", "button");
+    modifyButton.setAttribute("id", "open-modal-btn");
+    modifyButton.innerHTML = `<i class="fa-regular fa-pen-to-square"></i> modifier`;
+    modify.appendChild(modifyButton)
 }

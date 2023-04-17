@@ -14,7 +14,7 @@ export async function login(email, password) {
         window.sessionStorage.setItem("token", loginInfo.token)
         window.location.href='./'
     }else {
-        alert("Une erreur est survenue.")
+        alert("Login ou mot de passe incorrect.")
     }
 }
 

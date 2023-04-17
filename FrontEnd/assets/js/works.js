@@ -12,6 +12,7 @@ function createGallery(works) {
     works.forEach(work => {
         //Création de chaque projet en HTML
         const workElement = document.createElement("figure");
+        workElement.setAttribute("id", work.id);
         const imageElement = document.createElement("img");
         imageElement.setAttribute("alt", work.title);
         imageElement.src = work.imageUrl;
@@ -30,6 +31,7 @@ createGallery(works);
 
 function createCategoryButton(category, checked) {
     //Création des boutons
+    const galleryMenu = document.querySelector(".gallery-menu")
     const galleryCategory = document.createElement("input")
     galleryCategory.type = "radio";
     galleryCategory.id = category;
@@ -91,4 +93,36 @@ if(!adminAuth()) {
     modifyButton.setAttribute("id", "open-modal-btn");
     modifyButton.innerHTML = `<i class="fa-regular fa-pen-to-square"></i> modifier`;
     modify.appendChild(modifyButton)
+    //Faire apparaître la bannière d'édition
+    const editBanner = document.querySelector("#edit-banner");
+    editBanner.style.display = "flex";
+    //Faire apparaître le bouton modifier de l'intro
+    const editBtn = document.querySelector(".edit-intro");
+    editBtn.style.display = "flex";
+    //Faire disparaître le bouton log-in
+    const logIn = document.querySelector(".login");
+    logIn.style.display = "none";
+    //Faire apparaître le bouton log-out qui déconnecte au clic
+    const logOut = document.querySelector(".logout");
+    logOut.style.display = "inline";
+    logOut.addEventListener('click', (e) => {
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('token')
+    })
 }
+
+//Fonction pour supprimer les travaux par ID
+export async function deleteWorkbyID(id) {
+    const token = sessionStorage.getItem('token');
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'accept': '*/*',
+            'Authorization': "Bearer " + token
+        }
+    });
+
+    return response;
+}
+
+//Fonction pour ajouter un nouveau projet

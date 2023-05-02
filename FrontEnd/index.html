@@ -58,6 +58,32 @@
 				<button type="button" class="delete-gallery">Supprimer la galerie</button>
 			</div>
 		</dialog>
+		<dialog id="modal-form" class="modal" role="dialog">
+			<div class="modal-wrapper">
+				<div class="modal-btn-wrapper">
+					<button class="return-modal-btn" type="button"><i class="fa-solid fa-arrow-left"></i></i></button>
+					<button class="close-modal-btn" type="button"><i class="fa-solid fa-xmark"></i></button>
+				</div>
+				<h3 id="gallery-modal">Ajout photo</h3>
+				<form action="" method="post" class="add-work">
+					<div class="img-preview">
+						<img src="./assets/icons/preview.png" class="icon-preview" alt="Preview Image">
+						<label for="add-work">+ Ajouter photo</label>
+						<input type="file" id="add-work" accept="image/png, image/jepg" name="image" required="required">
+						<p class="file-info">jpg, png : 4mo max</p>
+						<img src="" id="file-preview" alt="">
+					</div>
+					<label for="work-title">Titre</label>
+					<input type="text" id="work-title" name="title" required="required">
+					<label for="work-category">Catégorie</label>
+					<select id="work-category" name="category" required="required">
+						<option></option>
+					</select>
+					<div class="form-separator"></div>
+					<input type="submit" class="modal-form-submit" value="Valider" disabled>
+				</form>
+			</div>
+		</dialog>
 		<div class="gallery">
 		</div>
 	</section>

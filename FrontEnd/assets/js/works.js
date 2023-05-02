@@ -7,41 +7,53 @@ const works = await response.json();
 //Récupération de l'élément du DOM qui accueillera les projets
 const gallery = document.querySelector(".gallery");
 
+
+//
+//Fonction pour créer la gallerie de projets
+//
 function createGallery(works) {
     gallery.innerHTML = "";
-    works.forEach(work => {
-        //Création de chaque projet en HTML
-        const workElement = document.createElement("figure");
-        workElement.setAttribute("id", work.id);
-        const imageElement = document.createElement("img");
-        imageElement.setAttribute("alt", work.title);
-        imageElement.src = work.imageUrl;
-        const titleElement =  document.createElement("figcaption");
-        titleElement.innerText = work.title;
-
-        //Rattachement de la balise figure à la div gallery
-        gallery.appendChild(workElement);
-        //Rattachement de l'image à la balise figure
-        workElement.appendChild(imageElement);
-        workElement.appendChild(titleElement);
-    })
+    works.forEach(createGalleryItem)
 };
 
 createGallery(works);
 
+//
+//Fonction pour créer un projet dans la gallerie
+//
+function createGalleryItem(work) {
+    //Création de chaque projet en HTML
+    const workElement = document.createElement("figure");
+    workElement.setAttribute("id", work.id);
+    const imageElement = document.createElement("img");
+    imageElement.setAttribute("alt", work.title);
+    imageElement.src = work.imageUrl;
+    const titleElement =  document.createElement("figcaption");
+    titleElement.innerText = work.title;
+
+    //Rattachement de la balise figure à la div gallery
+    gallery.appendChild(workElement);
+    //Rattachement de l'image à la balise figure
+    workElement.appendChild(imageElement);
+    workElement.appendChild(titleElement);
+}
+
+//
+//Fonction pour créer les boutons filtres par catégorie
+//
 function createCategoryButton(category, checked) {
     //Création des boutons
     const galleryMenu = document.querySelector(".gallery-menu")
     const galleryCategory = document.createElement("input")
     galleryCategory.type = "radio";
-    galleryCategory.id = category;
+    galleryCategory.id = category.id;
     galleryCategory.name = "category";
-    galleryCategory.value = category;
+    galleryCategory.value = category.name;
     galleryCategory.checked = checked;
     //Création de chaque label
     const categoryLabel = document.createElement("label");
-    categoryLabel.setAttribute("for", category);
-    categoryLabel.innerText = category;
+    categoryLabel.setAttribute("for", category.id);
+    categoryLabel.innerText = category.name;
     //Ajout de l'écouteur d'évènement pour filtrer au clic
     galleryCategory.addEventListener("click", e => {
        const filteredWorks = works.filter(function (work) {
@@ -56,16 +68,26 @@ function createCategoryButton(category, checked) {
     
 }
 
-//Création des boutons si l'aadmin n'est pas connectée sinon bouton modifier
-if(!adminAuth()) {
-    //Récupération des catégories pour chaque projet
-    let workCategories = works.map(work => {
-        return work.category.name;
-        
-    });
+//
+//Fonction pour le select de la modale à l'ajout de nouveaux travaux
+//
+function createCategoryOption(category) {
+    const categorySelect = document.getElementById("work-category")
+    const categoryOption = document.createElement("option")
+    categoryOption.value = category.id;
+    categoryOption.innerText = category.name;
+    categorySelect.appendChild(categoryOption)
+}
 
-    //Création d'un set avec les 3 catégories
-    workCategories = new Set(workCategories);
+//Récupération des catégories pour chaque projet
+let workCategories = await fetch('http://localhost:5678/api/categories');
+workCategories = await workCategories.json();
+
+
+//
+//Création des boutons si l'admin n'est pas connectée sinon, dashboard admin
+//
+if(!adminAuth()) {
 
     //Récupération de l'élément du DOM qui accueillera les boutons
     const portfolio = document.querySelector("#portfolio");
@@ -76,7 +98,10 @@ if(!adminAuth()) {
     portfolio.insertBefore(galleryMenu, gallery);
 
     //Création des boutons radio pour chaque catégorie
-    createCategoryButton("Tous", true);
+    createCategoryButton({
+        "id": 0,
+        "name": "Tous"
+    }, true);
     workCategories.forEach(category => {
         createCategoryButton(category, false)
     });
@@ -109,9 +134,15 @@ if(!adminAuth()) {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('token')
     })
+    //Récupération des catégories pour le select
+    workCategories.forEach(category => {
+        createCategoryOption(category)
+    });
 }
 
+// 
 //Fonction pour supprimer les travaux par ID
+// 
 export async function deleteWorkbyID(id) {
     const token = sessionStorage.getItem('token');
     const response = await fetch(`http://localhost:5678/api/works/${id}`, {
@@ -125,4 +156,64 @@ export async function deleteWorkbyID(id) {
     return response;
 }
 
-//Fonction pour ajouter un nouveau projet
+//
+//Ajout d'un nouveau projet
+//
+const addForm = document.querySelector('.add-work');
+
+//
+//Fonction pour vérifier le remplissage de chaque champ du formulaire
+//
+function formValidation(e) {
+    //Récupération des champs du formulaire
+    const image = document.getElementById('add-work').files[0];
+    const fileTitle = document.getElementById('work-title').value;
+    const fileCategory = document.getElementById('work-category').value;
+
+    if (!fileTitle || !image || !fileCategory) {
+        document.querySelector('.modal-form-submit').disabled = true;
+    } else {
+        document.querySelector('.modal-form-submit').disabled = false;
+    }
+}
+
+//Ecouteurs d'évènements pour le remplissage de chaque champ du formulaire
+document.querySelectorAll('#add-work, #work-title, #work-category').forEach(field => {
+    field.addEventListener('change', formValidation)
+})
+
+//Ecouteur d'évènement au submit du formulaire
+addForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    //Récupération des champs du formulaire
+    const image = document.getElementById('add-work').files[0];
+    const fileTitle = document.getElementById('work-title').value;
+    const fileCategory = document.getElementById('work-category').value;
+
+    if (!fileTitle || !image || !fileCategory) {
+        alert("Veuillez remplir entièrement le formulaire.");
+    }
+
+    //Création de l'objet formData
+    const formData =  new FormData();
+    formData.append("image", image);
+    formData.append("title", fileTitle);
+    formData.append("category", fileCategory);
+
+    //Vérification du remplissage des champs du formulaire
+    const token = sessionStorage.getItem('token');
+    const response = await fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            'accept': 'application/json',
+            'Authorization': "Bearer " + token,
+        },
+        body: formData,
+    });
+    if(response.status == 201) {
+        addForm.reset();
+        document.getElementById('file-preview').src = "";
+        createGalleryItem(await response.json())
+    }
+})
+

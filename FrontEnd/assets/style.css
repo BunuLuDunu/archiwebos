@@ -278,8 +278,18 @@ nav .logout {
 	padding: 1.625rem 1.875rem;
 }
 
+.modal-wrapper .modal-btn-wrapper {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
 .modal-wrapper .close-modal-btn {
 	margin-left: auto;
+	font-size: 1.5rem;
+}
+
+.modal-wrapper .return-modal-btn {
 	font-size: 1.5rem;
 }
 
@@ -326,7 +336,7 @@ nav .logout {
 
 .modal-wrapper .gallery-modal img {
 	width: 100%;
-	aspect-ratio: 4.883rem/6.505rem;
+	aspect-ratio: 4.883 / 6.505;
 	object-fit: cover;
 }
 
@@ -359,6 +369,99 @@ nav .logout {
 
 .modal-wrapper .gallery-modal figure:not(:hover) .move-work {
 	display: none;
+}
+
+/*Seconde modal d'ajout projet*/
+
+.modal-wrapper form {
+	display: flex;
+	flex-direction: column;
+	width: 26.25rem;
+}
+
+.modal-wrapper .img-preview {
+	position: relative;
+	background-color: #E8F1F7;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 0.438rem;
+}
+
+.modal-wrapper .img-preview .icon-preview {
+	margin-top: 1.75rem;
+}
+
+.modal-wrapper .img-preview input {
+	display: none;
+}
+
+.modal-wrapper .img-preview label {
+	margin-top: 1.938rem;
+	color: #306685;
+	background-color: #CBD6DC;
+	border: 1px solid #CBD6DC;
+	border-radius: 3.125rem;
+	padding: 0.625rem 2.063rem;
+	cursor: pointer;
+}
+
+.modal-wrapper .img-preview p {
+	margin-bottom: 1.188rem;
+	font-size: 0.625rem;
+}
+
+.modal-wrapper .img-preview #file-preview {
+	display: block;
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	background-color: #E8F1F7;
+}
+
+.modal-wrapper .img-preview #file-preview[src=""] {
+	display: none;
+}
+
+.modal-wrapper form label {
+	margin-top: 1.313rem;
+	margin-bottom: 0.625rem;
+}
+
+.modal-wrapper form input, form select {
+	font-family: 'Work sans';
+	font-size: 1rem;
+	padding: 1.125rem 1rem;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
+}
+
+.modal-wrapper select {
+	appearance: none;
+	background-image: url(./icons/arrow.png);
+	background-repeat: no-repeat;
+	background-position: center right 1.331rem;
+}
+
+.modal-wrapper .form-separator {
+	margin-top: 2.938rem;
+	margin-bottom: 2rem;
+	border-top: 1px solid #B3B3B3;
+}
+
+.modal-wrapper form input[type=submit] {
+	background-color: #1D6154;
+	font-family: 'Syne';
+	font-size: 0.875rem;
+	width: auto;
+	padding: 0.625rem 7rem;
+	margin: 0 auto;
+}
+
+.modal-wrapper form input[type=submit]:disabled {
+	background-color: #A7A7A7;
 }
 
 .gallery {

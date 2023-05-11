@@ -1,4 +1,5 @@
 import { adminAuth } from "./auth.js";
+import { createGalleryModalItem } from "./modal.js"
 
 //Récupération des travaux depuis l'API
 const response = await fetch('http://localhost:5678/api/works');
@@ -9,7 +10,7 @@ const gallery = document.querySelector(".gallery");
 
 
 //
-//Fonction pour créer la gallerie de projets
+//Fonction pour créer la galerie de projets
 //
 function createGallery(works) {
     gallery.innerHTML = "";
@@ -19,7 +20,7 @@ function createGallery(works) {
 createGallery(works);
 
 //
-//Fonction pour créer un projet dans la gallerie
+//Fonction pour créer un projet dans la galerie
 //
 function createGalleryItem(work) {
     //Création de chaque projet en HTML
@@ -157,11 +158,6 @@ export async function deleteWorkbyID(id) {
 }
 
 //
-//Ajout d'un nouveau projet
-//
-const addForm = document.querySelector('.add-work');
-
-//
 //Fonction pour vérifier le remplissage de chaque champ du formulaire
 //
 function formValidation(e) {
@@ -170,10 +166,11 @@ function formValidation(e) {
     const fileTitle = document.getElementById('work-title').value;
     const fileCategory = document.getElementById('work-category').value;
 
-    if (!fileTitle || !image || !fileCategory) {
-        document.querySelector('.modal-form-submit').disabled = true;
-    } else {
-        document.querySelector('.modal-form-submit').disabled = false;
+    if (fileTitle && image && fileCategory) {
+        const formAlert = document.querySelector(".form-alert");
+        if(formAlert) {
+            formAlert.remove();
+        }
     }
 }
 
@@ -181,6 +178,12 @@ function formValidation(e) {
 document.querySelectorAll('#add-work, #work-title, #work-category').forEach(field => {
     field.addEventListener('change', formValidation)
 })
+
+
+//
+//Ajout d'un nouveau projet
+//
+const addForm = document.querySelector('.add-work');
 
 //Ecouteur d'évènement au submit du formulaire
 addForm.addEventListener('submit', async (e) => {
@@ -191,7 +194,12 @@ addForm.addEventListener('submit', async (e) => {
     const fileCategory = document.getElementById('work-category').value;
 
     if (!fileTitle || !image || !fileCategory) {
-        alert("Veuillez remplir entièrement le formulaire.");
+        const formModal = document.querySelector(".add-work");
+        const formAlert = document.createElement("p");
+        formAlert.classList.add("form-alert");
+        formAlert.innerText = "Veuillez remplir entièrement le formulaire";
+        formModal.appendChild(formAlert)
+        return;
     }
 
     //Création de l'objet formData
@@ -213,7 +221,11 @@ addForm.addEventListener('submit', async (e) => {
     if(response.status == 201) {
         addForm.reset();
         document.getElementById('file-preview').src = "";
-        createGalleryItem(await response.json())
+
+        const work = await response.json()
+
+        createGalleryItem(work)
+        createGalleryModalItem(work)
     }
 })
 

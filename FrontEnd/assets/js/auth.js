@@ -14,7 +14,11 @@ export async function login(email, password) {
         window.sessionStorage.setItem("token", loginInfo.token)
         window.location.href='./'
     }else {
-        alert("Login ou mot de passe incorrect.")
+        const formLogin = document.querySelector(".login-form");
+        const loginAlert = document.createElement("p");
+        loginAlert.classList.add("login-alert");
+        loginAlert.innerText = "Login ou mot de passe incorrect.";
+        formLogin.appendChild(loginAlert)
     }
 }
 

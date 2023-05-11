@@ -34,7 +34,7 @@ createGalleryModal(works)
 //
 //Fonction pour créer chaque projet dans la modale
 //
-function createGalleryModalItem(work) {
+export function createGalleryModalItem(work) {
     //Création de chaque projet en HTML
     const workElement = document.createElement("figure");
     const imageElement = document.createElement("img");

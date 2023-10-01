@@ -19,8 +19,6 @@ git clone https://github.com/BunuLuDunu/archiwebos.git
 npm install
 ```
 
-![Desktop](/FrontEnd/assets/images/127.0.0.1_5500_FrontEnd_index.html.png)
-
 
 ## 🙇 Commentaires de soutenance :
 - Bonne intégration des besoins de l'utilisateur ;
